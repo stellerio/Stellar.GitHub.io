@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="AudioX — an upcoming Gorilla Tag sound panel menu.">
-<meta name="cache-version" content="audiox-2026-09-10-real-txt">
+<meta name="cache-version" content="audiox-2026-09-10-real-txt-fix2">
 <title>AudioX — Gorilla Tag Sound Panel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="css/style.css?v=audiox-20260910-real-txt">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="css/style.css?v=audiox-20260910-fix2">
 <style>
 .download-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);backdrop-filter:blur(14px);z-index:1000;padding:20px}.download-modal.show{display:flex}.download-card{width:min(620px,100%);border:1px solid rgba(255,255,255,.14);border-radius:24px;padding:30px;background:rgba(12,12,15,.94);box-shadow:0 30px 100px rgba(0,0,0,.65);animation:pop .28s ease}.download-card h2{margin:0 0 8px}.download-card p{color:#aaa;line-height:1.6}.download-steps{display:grid;gap:12px;margin:22px 0}.download-step{display:flex;gap:14px;align-items:flex-start;padding:15px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(255,255,255,.025)}.step-number{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#fff;color:#000;font-weight:800;flex:none}.check-row{display:flex;gap:12px;align-items:flex-start;margin:18px 0;color:#ddd}.check-row input{margin-top:4px;width:18px;height:18px;accent-color:#fff}.modal-actions{display:flex;gap:10px;margin-top:22px}.modal-actions button{flex:1}.disabled-button{opacity:.4;cursor:not-allowed}.captcha-placeholder{padding:18px;border:1px dashed rgba(255,255,255,.2);border-radius:14px;text-align:center;color:#aaa;margin-top:14px}.captcha-placeholder b{color:#fff}.download-progress{height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-top:18px;display:none}.download-progress span{display:block;width:0;height:100%;background:#fff;transition:width 1.2s ease}.tiny-close{background:transparent;border:0;color:#777;cursor:pointer;float:right;font-size:20px}.success{color:#bfffc8!important}@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
 </style>
@@ -20,13 +20,26 @@
 <section id="disclaimer" class="status-section reveal"><div class="status-card glass disclaimer"><div class="status-light"></div><div><span class="section-kicker">DISCLAIMER</span><h3>Use AudioX responsibly.</h3><p>AudioX is a community-made project and is not affiliated with Gorilla Tag or its developers. Use AudioX responsibly and follow the rules of the game, servers, and communities you play in. I am not responsible for bans, kicks, moderation actions, account restrictions, or other consequences caused by misuse or overuse of AudioX.</p></div><span class="status-label">USE RESPONSIBLY</span></div></section>
 </main><footer><span>AudioX</span><span>Gorilla Tag community project</span><span>© 2026</span></footer>
 <div id="download-modal" class="download-modal" aria-hidden="true"><div class="download-card"><button class="tiny-close" id="close-modal" type="button">×</button><span class="section-kicker">DOWNLOAD VERIFICATION</span><h2>Before you download AudioX</h2><p>Please complete the CAPTCHA verification to verify you're not a bot, then agree to the project terms.</p><div class="download-steps"><div class="download-step"><span class="step-number">1</span><div><strong>Verify you're not a bot</strong><div class="captcha-placeholder"><b>CAPTCHA PLACEHOLDER</b><br>This is a visual placeholder for now. A real CAPTCHA service can be connected before release.</div></div></div><div class="download-step"><span class="step-number">2</span><div><strong>Review the agreement</strong><div class="check-row"><input id="terms-check" type="checkbox"><label for="terms-check">I understand that AudioX is a community-made project, is <strong>not affiliated with Gorilla Tag or any of its team</strong>, and I am responsible for how I use it. I understand that misuse may result in bans, kicks, moderation actions, account restrictions, or other consequences, and I agree not to hold the AudioX creator responsible for those consequences.</label></div></div></div></div><div class="modal-actions"><button id="cancel-download" class="secondary-button" type="button">Cancel</button><button id="continue-download" class="primary-button disabled-button" type="button" disabled>Continue to download</button></div><div id="download-progress" class="download-progress"><span></span></div></div></div>
-<script src="animations/effects.js?v=audiox-20260910-real-txt"></script><script src="js/main.js?v=audiox-20260910-real-txt"></script>
+<script src="animations/effects.js?v=audiox-20260910-fix2"></script><script src="js/main.js?v=audiox-20260910-fix2"></script>
 <script>
-const start=document.getElementById('start-download'),modal=document.getElementById('download-modal'),close=document.getElementById('close-modal'),cancel=document.getElementById('cancel-download'),terms=document.getElementById('terms-check'),continueBtn=document.getElementById('continue-download'),status=document.getElementById('download-status'),progress=document.getElementById('download-progress'),bar=progress.querySelector('span');
-function openModal(){modal.classList.add('show');modal.setAttribute('aria-hidden','false');terms.checked=false;continueBtn.disabled=true;continueBtn.classList.add('disabled-button');progress.style.display='none';bar.style.width='0';status.textContent='';status.classList.remove('success')}
+(function(){
+const start=document.getElementById('start-download');
+const modal=document.getElementById('download-modal');
+const close=document.getElementById('close-modal');
+const cancel=document.getElementById('cancel-download');
+const terms=document.getElementById('terms-check');
+const continueBtn=document.getElementById('continue-download');
+const downloadStatus=document.getElementById('download-status');
+const progress=document.getElementById('download-progress');
+const bar=progress.querySelector('span');
+function openModal(){modal.classList.add('show');modal.setAttribute('aria-hidden','false');terms.checked=false;continueBtn.disabled=true;continueBtn.classList.add('disabled-button');progress.style.display='none';bar.style.width='0';downloadStatus.textContent='';downloadStatus.classList.remove('success')}
 function hideModal(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}
-start.addEventListener('click',openModal);close.addEventListener('click',hideModal);cancel.addEventListener('click',hideModal);modal.addEventListener('click',e=>{if(e.target===modal)hideModal()});
-terms.addEventListener('change',()=>{continueBtn.disabled=!terms.checked;continueBtn.classList.toggle('disabled-button',!terms.checked)});
-continueBtn.addEventListener('click',()=>{if(!terms.checked)return;continueBtn.disabled=true;status.textContent='Preparing download…';progress.style.display='block';setTimeout(()=>bar.style.width='100%',40);setTimeout(()=>{const a=document.createElement('a');a.href='downloads/AudioX-v0.1.0-preview.txt';a.download='AudioX-v0.1.0-preview.txt';document.body.appendChild(a);a.click();a.remove();status.textContent='✓ Download started';status.classList.add('success');setTimeout(hideModal,900)},1300)});
+start.addEventListener('click',openModal);
+close.addEventListener('click',hideModal);
+cancel.addEventListener('click',hideModal);
+modal.addEventListener('click',function(e){if(e.target===modal)hideModal()});
+terms.addEventListener('change',function(){continueBtn.disabled=!terms.checked;continueBtn.classList.toggle('disabled-button',!terms.checked)});
+continueBtn.addEventListener('click',function(){if(!terms.checked)return;continueBtn.disabled=true;downloadStatus.textContent='Preparing download…';progress.style.display='block';setTimeout(function(){bar.style.width='100%'},40);setTimeout(function(){const a=document.createElement('a');a.href='./downloads/AudioX-v0.1.0-preview.txt';a.download='AudioX-v0.1.0-preview.txt';document.body.appendChild(a);a.click();a.remove();downloadStatus.textContent='✓ Download started';downloadStatus.classList.add('success');setTimeout(hideModal,900)},1300)});
+})();
 </script>
 </body></html>
