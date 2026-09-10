@@ -1,0 +1,12 @@
+AudioX v0.1.0 — Preview
+
+This is the current AudioX preview download.
+
+AudioX is a community-made Gorilla Tag sound panel project and is not affiliated with Gorilla Tag or its developers.
+
+Status: Preview / In Development
+Version: 0.1.0
+
+Note: This TXT file is a placeholder download until the actual AudioX build is released.
+
+Use AudioX responsibly and follow the rules of the game, servers, and communities you play in.
